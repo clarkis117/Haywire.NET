@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Haywire.NET
+namespace HaywireNet.Bindings
 {
     public class Class1
     {
