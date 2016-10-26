@@ -7,6 +7,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Bindings", "Bindings\Bindin
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "RequestServer", "RequestServer\RequestServer.xproj", "{D9008931-0EF4-4477-8843-1798500ACC5E}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HelloWorld", "HelloWorld\HelloWorld.xproj", "{982F46E4-B59C-4BD2-B290-FE6FE2F402BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D9008931-0EF4-4477-8843-1798500ACC5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9008931-0EF4-4477-8843-1798500ACC5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9008931-0EF4-4477-8843-1798500ACC5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{982F46E4-B59C-4BD2-B290-FE6FE2F402BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{982F46E4-B59C-4BD2-B290-FE6FE2F402BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{982F46E4-B59C-4BD2-B290-FE6FE2F402BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{982F46E4-B59C-4BD2-B290-FE6FE2F402BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
