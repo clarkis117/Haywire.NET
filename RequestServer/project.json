@@ -2,13 +2,15 @@
   "version": "1.0.0-*",
 
   "dependencies": {
-    "Bindings": "1.0.0-*",
-    "NETStandard.Library": "1.6.0"
+	"Bindings": "1.0.0-*",
+	"NETStandard.Library": "1.6.0",
+	"Microsoft.AspNetCore.Hosting": "1.0.0",
+	"Microsoft.AspNetCore.Routing": "1.0.1"
   },
 
   "frameworks": {
-    "netstandard1.6": {
-      "imports": "dnxcore50"
-    }
+	"netstandard1.6": {
+	  "imports": "dnxcore50"
+	}
   }
 }
