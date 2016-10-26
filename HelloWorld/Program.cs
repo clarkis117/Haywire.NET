@@ -1,4 +1,5 @@
-﻿using HaywireNet.Bindings.Unsafe;
+﻿using HaywireNet.Bindings.Extensions;
+using HaywireNet.Bindings.Unsafe;
 using HaywireNet.Bindings.Unsafe.Structs;
 
 using System;
@@ -23,27 +24,27 @@ namespace HelloWorld
 			{
 				configuration config;
 
-				config.http_listen_address = StringMethods.GetASCII(DefaultAddress);
+				config.http_listen_address = DefaultAddress.ToAsciiNullTerm();
 				config.http_listen_port = DefaultPort;
 				config.thread_count = 0;
-				config.parser = StringMethods.GetASCII("http_parser");
+				config.parser = "http_parser".ToAsciiNullTerm();
 				config.max_request_size = 1048576;
 				config.tcp_nodelay = true;
 				config.listen_backlog = 0;
 
 				Console.WriteLine(Directory.GetCurrentDirectory());
 
-				IntPtr unmanagedAddr = Marshal.AllocHGlobal(Marshal.SizeOf(config));
+				//IntPtr unmanagedAddr = Marshal.AllocHGlobal(Marshal.SizeOf(config));
 
-				Marshal.StructureToPtr(config, unmanagedAddr, true);
+				//Marshal.StructureToPtr(config, unmanagedAddr, true);
 
-				void* ptr = null;
+				//void* ptr = null;
 
 				Functions.hw_init_with_config(&config); //((configuration*)unmanagedAddr);
 
-				Functions.hw_http_add_route(StringMethods.GetASCII(RootRoute), GetRoot, null);
+				Functions.hw_http_add_route(RootRoute.ToUtf8NullTerm(), GetRoot, null);
 
-				Functions.hw_http_add_route(StringMethods.GetUTF8(PingRoute), GetPing, null);
+				Functions.hw_http_add_route(PingRoute.ToAsciiNullTerm(), GetPing, null);
 
 				Functions.hw_http_open();
 
@@ -71,23 +72,23 @@ namespace HelloWorld
 			HaywireString routeMatchedName;
 			HaywireString routeMatchedValue;
 
-			StringMethods.SetStringASCII(out statusCode, "200 OK");
+			"200 OK".SetStringASCII(out statusCode);
 
 			Functions.hw_set_response_status_code(response, &statusCode);
 
-			StringMethods.SetStringASCII(out contentTypeName, "Content-Type");
+			"Content-Type".SetStringASCII(out contentTypeName);
 
-			StringMethods.SetStringASCII(out contentTypeValue, "text/html");
+			"text/html".SetStringASCII(out contentTypeValue);
 
 			Functions.hw_set_response_header(response, &contentTypeName, &contentTypeValue);
 
-			StringMethods.SetStringASCII(out body, "Hello World");
+			"Hello World From C#".SetStringASCII(out body);
 			Functions.hw_set_body(response, &body);
 
 			if (request->keep_alive > 0)
 			{
-				StringMethods.SetStringASCII(out keepAliveName, "Connection");
-				StringMethods.SetStringASCII(out keepAliveValue, "Keep-Alive");
+				"Connection".SetStringASCII(out keepAliveName);
+				"Keep-Alive".SetStringASCII(out keepAliveValue);
 				Functions.hw_set_response_header(response, &keepAliveName, &keepAliveValue);
 			}
 			else
@@ -113,13 +114,13 @@ namespace HelloWorld
 
 			//Functions.hw_print_body(request)
 
-			StringMethods.SetStringASCII(out statusCode, "200 OK");
+			"200 OK".SetStringASCII(out statusCode);
 
 			Functions.hw_set_response_status_code(response, &statusCode);
 
-			StringMethods.SetStringASCII(out contentTypeName, "Content-Type");
+			"Content-Type".SetStringASCII(out contentTypeName);
 
-			StringMethods.SetStringASCII(out contentTypeValue, "text/html");
+			"text/html".SetStringASCII(out contentTypeValue);
 
 			Functions.hw_set_response_header(response, &contentTypeName, &contentTypeValue);
 
@@ -130,8 +131,8 @@ namespace HelloWorld
 
 			if (request->keep_alive > 0)
 			{
-				StringMethods.SetStringASCII(out keepAliveName, "Connection");
-				StringMethods.SetStringASCII(out keepAliveValue, "Keep-Alive");
+				"Connection".SetStringASCII(out keepAliveName);
+				"Keep-Alive".SetStringASCII(out keepAliveValue);
 				Functions.hw_set_response_header(response, &keepAliveName, &keepAliveValue);
 			}
 			else
