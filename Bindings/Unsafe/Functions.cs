@@ -11,7 +11,7 @@ namespace HaywireNet.Bindings.Unsafe
 	//todo hw_http_response
 	public unsafe static class Functions
 	{
-		public const string LibraryName = "haywire.so";
+		public const string LibraryName = "libhaywire_shared.so"; //"./bin/Debug/netcoreapp1.0/libhaywire_shared.so";
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 		public delegate void http_request_callback(HttpRequest* request, void* response, void* user_data);
@@ -23,7 +23,7 @@ namespace HaywireNet.Bindings.Unsafe
 		public static extern int hw_init_from_config(byte* configuration_filename);
 
 		[DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern int hw_init_with_config(Configuration* config);
+		public static extern int hw_init_with_config(void* config);
 
 		[DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int hw_http_open();

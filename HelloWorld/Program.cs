@@ -3,7 +3,9 @@ using HaywireNet.Bindings.Unsafe.Structs;
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace HelloWorld
@@ -12,30 +14,45 @@ namespace HelloWorld
 	{
 		const string RootRoute = "/";
 		const string PingRoute = "/ping";
-		const string DefaultAddress = "0.0.0.0";
-		const uint DefaultPort = 8000;
+		const string DefaultAddress = "127.0.0.1";
+		const uint DefaultPort = 8800;
 
 		public static void Main(string[] args)
 		{
-			Configuration config;
+			try
+			{
+				configuration config;
 
-			config.http_listen_address = StringMethods.GetASCII(DefaultAddress);
-			config.http_listen_port = DefaultPort;
-			config.thread_count = 0;
-			config.parser = StringMethods.GetASCII("http_parser");
-			config.max_request_size = 1048576;
-			config.tcp_nodelay = true;
-			config.listen_backlog = 0;
+				config.http_listen_address = StringMethods.GetASCII(DefaultAddress);
+				config.http_listen_port = DefaultPort;
+				config.thread_count = 0;
+				config.parser = StringMethods.GetASCII("http_parser");
+				config.max_request_size = 1048576;
+				config.tcp_nodelay = true;
+				config.listen_backlog = 0;
 
-			Functions.hw_init_with_config(&config);
+				Console.WriteLine(Directory.GetCurrentDirectory());
 
-			Functions.hw_http_add_route(StringMethods.GetASCII(RootRoute), GetRoot, null);
+				IntPtr unmanagedAddr = Marshal.AllocHGlobal(Marshal.SizeOf(config));
 
-			Functions.hw_http_add_route(StringMethods.GetASCII(PingRoute), GetPing, null);
+				Marshal.StructureToPtr(config, unmanagedAddr, true);
 
-			Functions.hw_http_open();
+				void* ptr = null;
 
-			return;
+				Functions.hw_init_with_config(&config); //((configuration*)unmanagedAddr);
+
+				Functions.hw_http_add_route(StringMethods.GetASCII(RootRoute), GetRoot, null);
+
+				Functions.hw_http_add_route(StringMethods.GetUTF8(PingRoute), GetPing, null);
+
+				Functions.hw_http_open();
+
+				return;
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+			}
 		}
 
 		static void ResponseComplete(void* user_data)
