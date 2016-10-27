@@ -12,7 +12,7 @@ namespace HaywireNet.Bindings.Safe
 	public unsafe class Functions
 	{
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		public delegate void http_request_callback(HttpRequest* request, IntPtr response, IntPtr user_data);
+		public delegate void http_request_callback(ref HttpRequest request, IntPtr response, IntPtr user_data);
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 		public delegate void http_response_complete_callback(IntPtr user_data);
@@ -30,7 +30,7 @@ namespace HaywireNet.Bindings.Safe
 		public static extern void hw_http_add_route([MarshalAs(UnmanagedType.LPStr)]string route, http_request_callback callback, IntPtr user_data);
 
 		[DllImport(Constants.LibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern HaywireString* hw_get_header(HttpRequest* request, HaywireString* key);
+		public static extern HaywireString* hw_get_header(ref HttpRequest request, ref HaywireString key);
 
 		//hw_http_response* response
 		[DllImport(Constants.LibraryName, CallingConvention = CallingConvention.Cdecl)]
@@ -42,21 +42,21 @@ namespace HaywireNet.Bindings.Safe
 
 		//hw_http_response* response
 		[DllImport(Constants.LibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void hw_set_response_status_code(IntPtr response, HaywireString* status_code);
+		public static extern void hw_set_response_status_code(IntPtr response, ref HaywireString status_code);
 
 		//hw_http_response* response
 		[DllImport(Constants.LibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void hw_set_response_header(IntPtr response, HaywireString* name, HaywireString* value);
+		public static extern void hw_set_response_header(IntPtr response, ref HaywireString name, ref HaywireString value);
 
 		//hw_http_response* response
 		[DllImport(Constants.LibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void hw_set_body(IntPtr response, HaywireString* body);
+		public static extern void hw_set_body(IntPtr response, ref HaywireString body);
 
 		//hw_http_response* response
 		[DllImport(Constants.LibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void hw_http_response_send(IntPtr response, IntPtr user_data, http_response_complete_callback callback);
 
 		[DllImport(Constants.LibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void hw_print_request_headers(HttpRequest* request);
+		public static extern void hw_print_request_headers(ref HttpRequest request);
 	}
 }
