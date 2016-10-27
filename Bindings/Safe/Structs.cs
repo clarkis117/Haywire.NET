@@ -6,20 +6,28 @@ using System.Threading.Tasks;
 
 namespace HaywireNet.Bindings.Safe
 {
-	[StructLayout(LayoutKind.Sequential)]
+	[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
 	public unsafe struct HaywireString
 	{
 		public byte* value;
 		public uint length;
+
+		public HaywireString(byte* ptrValue, int stringLength)
+		{
+			value = ptrValue;
+			length = (uint)stringLength;
+		}
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
 	public unsafe struct configuration
 	{
-		public byte* http_listen_address;
+		[MarshalAs(UnmanagedType.LPStr)]
+		public string http_listen_address;
 		public uint http_listen_port;
 		public uint thread_count;
-		public byte* parser;
+		[MarshalAs(UnmanagedType.LPStr)]
+		public string parser;
 		public bool tcp_nodelay;
 		public uint listen_backlog;
 		public uint max_request_size;
@@ -28,15 +36,17 @@ namespace HaywireNet.Bindings.Safe
 	public enum state { OK = 0, SIZE_EXCEEDED, BAD_REQUEST, INTERNAL_ERROR };
 
 	[StructLayout(LayoutKind.Sequential)]
-	public unsafe struct HttpRequest
+	public struct HttpRequest
 	{
 		public ushort http_major;
 		public ushort http_minor;
 		public byte method;
 		public int keep_alive;
-		public HaywireString* url;
+		//Haywire String
+		public IntPtr Url;
 		public IntPtr headers;
-		public HaywireString* body;
+		//HayWire String
+		public IntPtr body;
 		public uint body_length;
 	}
 }

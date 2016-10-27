@@ -2,49 +2,45 @@
 using HaywireNet.Bindings.Unsafe;
 using HaywireNet.Bindings.Unsafe.Structs;
 using System;
-using System.Runtime.InteropServices;
 
 namespace HelloWorld
 {
 	/// <summary>
 	/// A simple hello world program based on the hello world sample in github.com/haywire/haywire
 	/// </summary>
-	public unsafe class Unsafe2Program
+	public unsafe class unsafeProgram
 	{
 		private const string RootRoute = "/";
-		static readonly byte[] _rootRoute = RootRoute.ToAsciiNullArray();
+		static readonly byte* _rootRoute = RootRoute.ToAsciiNullTerm();
 
 		private const string PingRoute = "/ping";
-		static readonly byte[] _pingRoute = PingRoute.ToAsciiNullArray();
+		static readonly byte* _pingRoute = PingRoute.ToAsciiNullTerm();
 
 		private const string DefaultAddress = "192.168.1.112";
-		static readonly byte[] _defaultAddress = DefaultAddress.ToAsciiNullArray();
+		static readonly byte* _defaultAddress = DefaultAddress.ToAsciiNullTerm();
 
 		private const string HttpOk = "200 OK";
-		static readonly byte[] _httpOk = HttpOk.ToAsciiArray();
+		static readonly byte* _httpOk = HttpOk.ToAsciiString();
 
 		private const string ContentTypeName = "Content-Type";
-		static readonly byte[] _contentTypeName = ContentTypeName.ToAsciiArray();
+		static readonly byte* _contentTypeName = ContentTypeName.ToAsciiString();
 
 		private const string ContentTypeValue = "text/html";
-		static readonly byte[] _contentTypeValue = ContentTypeValue.ToAsciiArray();
+		static readonly byte* _contentTypeValue = ContentTypeValue.ToAsciiString();
 
 		private const string KeepAliveName = "Connection";
-		static readonly byte[] _keepAliveName = KeepAliveName.ToAsciiArray();
+		static readonly byte* _keepAliveName = KeepAliveName.ToAsciiString();
 
 		private const string KeepAliveValue = "Keep-Alive";
-		static readonly byte[] _keepAliveValue = KeepAliveValue.ToAsciiArray();
+		static readonly byte* _keepAliveValue = KeepAliveValue.ToAsciiString();
 
 		private const string Body = "Hello World";
-		static readonly byte[] _body = Body.ToAsciiArray();
+		static readonly byte* _body = Body.ToAsciiString();
 
 		private const string UserData = "user_data";
-		static readonly byte[] _userData = UserData.ToAsciiArray();
+		static readonly byte* _userData = UserData.ToAsciiString();
 
 		private const uint DefaultPort = 8800;
-
-		private const string Parser = "http_parser";
-		static readonly byte[] _parser = Parser.ToAsciiNullArray();
 
 		/*
 		static Program()
@@ -53,43 +49,29 @@ namespace HelloWorld
 		}
 		*/
 
-
-		
-		public unsafe static void Main(string[] args)
+		public unsafe static void unsafeMain(string[] args)
 		{
 			try
 			{
-				fixed (byte* rootRoute = _rootRoute)
-				fixed (byte* pingRoute = _pingRoute)
-				fixed (byte* defaultAddress = _defaultAddress)
-				fixed (byte* parser = _parser)
-				{
-					Console.WriteLine("2nd unsafe version");
+				Console.WriteLine("Unsafe Version");
 
-					//IntPtr configPtr = Marshal.AllocHGlobal(sizeof(configuration));
+				configuration config;
 
-					configuration config;
+				config.http_listen_address = DefaultAddress.ToAsciiNullTerm();
+				config.http_listen_port = DefaultPort;
+				config.thread_count = (uint)0;
+				config.parser = "http_parser".ToAsciiNullTerm();
+				config.max_request_size = 1048576;
+				config.tcp_nodelay = false;
+				config.listen_backlog = uint.MaxValue / 2;
 
-					config.http_listen_address = defaultAddress;
-					config.http_listen_port = DefaultPort;
-					config.thread_count = (uint)0;
-					config.parser = parser;
-					config.max_request_size = 1048576;
-					config.tcp_nodelay = false;
-					config.listen_backlog = 0;
+				Functions.hw_init_with_config(&config);
 
-					//Marshal.StructureToPtr<configuration>(config, configPtr, true);
+				Functions.hw_http_add_route(RootRoute.ToAsciiNullTerm(), GetRoot, (void*)0);
 
-					var program = new Unsafe2Program();
+				Functions.hw_http_add_route(PingRoute.ToAsciiNullTerm(), GetPing, (void*)0);
 
-					Functions.hw_init_with_config(&config);
-
-					Functions.hw_http_add_route(rootRoute, program.GetRoot, null);
-
-					//Functions.hw_http_add_route(pingRoute, GetPing, (void*)0);
-
-					var i = Functions.hw_http_open();
-				}
+				Functions.hw_http_open();
 
 				return;
 			}
@@ -103,42 +85,35 @@ namespace HelloWorld
 		{
 		}
 
-		private void GetRoot(HttpRequest* request, void* response, void* user_data)
+		private static void GetRoot(HttpRequest* request, void* response, void* user_data)
 		{
-			fixed(byte* httpOk = _httpOk)
-			fixed(byte* contentTypeName = _contentTypeName)
-			fixed(byte* contentTypeValue = _contentTypeValue)
-			fixed(byte* body1 = _body)
-			fixed(byte* keepAliveName = _keepAliveName)
-			fixed(byte* keepAliveValue = _keepAliveValue)
-			fixed(byte* userData = _userData)
+			HaywireString statusCode = new HaywireString(_httpOk, HttpOk.Length);
+			HaywireString contentTypeName = new HaywireString(_contentTypeName, ContentTypeName.Length);
+			HaywireString contentTypeValue = new HaywireString(_contentTypeValue, ContentTypeValue.Length);
+			HaywireString body = new HaywireString(_body, Body.Length);
+			HaywireString keepAliveName = new HaywireString(_keepAliveName, KeepAliveName.Length);
+			HaywireString keepAliveValue = new HaywireString(_keepAliveValue, KeepAliveValue.Length);
+			//HaywireString routeMatchedName;
+			//HaywireString routeMatchedValue;
+
+			Functions.hw_set_response_status_code(response, &statusCode);
+
+			Functions.hw_set_response_header(response, &contentTypeName, &contentTypeValue);
+
+			Functions.hw_set_body(response, &body);
+
+			if (request->keep_alive > 0)
 			{
-				HaywireString statusCode = new HaywireString(httpOk, HttpOk.Length);
-				HaywireString contenttypename = new HaywireString(contentTypeName, ContentTypeName.Length);
-				HaywireString contenttypevalue = new HaywireString(contentTypeValue, ContentTypeValue.Length);
-				HaywireString body = new HaywireString(body1, Body.Length);
-				HaywireString keepalivename = new HaywireString(keepAliveName, KeepAliveName.Length);
-				HaywireString keepalivevalue = new HaywireString(keepAliveValue, KeepAliveValue.Length);
-				//HaywireString routeMatchedName;
-				//HaywireString routeMatchedValue;
-
-				Functions.hw_set_response_status_code(response, &statusCode);
-
-				Functions.hw_set_response_header(response, &contenttypename, &contenttypevalue);
-
-				Functions.hw_set_body(response, &body);
-
-				if (request->keep_alive > 0)
-				{
-					Functions.hw_set_response_header(response, &keepalivename, &keepalivevalue);
-				}
-				else
-				{
-					Functions.hw_set_http_version(response, 1, 0);
-				}
-
-				Functions.hw_http_response_send(response, userData, ResponseComplete);
+				Functions.hw_set_response_header(response, &keepAliveName, &keepAliveValue);
 			}
+			else
+			{
+				Functions.hw_set_http_version(response, 1, 0);
+			}
+
+			//var userData = new IntPtr(null); //"user_data".ToAsciiNullTerm()
+
+			Functions.hw_http_response_send(response, _userData, ResponseComplete);
 		}
 
 		/*
@@ -183,7 +158,7 @@ namespace HelloWorld
 			Functions.hw_http_response_send(response, null, ResponseComplete);
 		}
 		*/
-		/*
+
 		private static void GetPing(HttpRequest* request, void* response, void* user_data)
 		{
 			HaywireString statusCode;
@@ -248,10 +223,9 @@ namespace HelloWorld
 
 			//var userData = new IntPtr(null); //"user_data".ToAsciiNullTerm()
 
-			Functions.hw_http_response_send(response, null, ResponseComplete);
+			Functions.hw_http_response_send(response, _userData, ResponseComplete);
 
 			Console.WriteLine("line: " + line++);
 		}
-		*/
 	}
 }

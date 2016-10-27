@@ -11,6 +11,12 @@ namespace HaywireNet.Bindings.Unsafe.Structs
 	{
 		public byte* value;
 		public uint length;
+
+		public HaywireString(byte* ptrValue, int stringLength)
+		{
+			value = ptrValue;
+			length = (uint)stringLength;
+		}
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
@@ -20,7 +26,9 @@ namespace HaywireNet.Bindings.Unsafe.Structs
 		public uint http_listen_port;
 		public uint thread_count;
 		public byte* parser;
+		//[MarshalAs(UnmanagedType.I4)]
 		public bool tcp_nodelay;
+		//[MarshalAs(UnmanagedType.U4)]
 		public uint listen_backlog;
 		public uint max_request_size;
 	}
