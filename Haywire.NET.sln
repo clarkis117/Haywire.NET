@@ -11,6 +11,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HelloWorld", "HelloWorld\He
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A597DE43-92B1-4444-A084-2C7C0941A56A}"
 	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
 		make.sh = make.sh
 	EndProjectSection
 EndProject

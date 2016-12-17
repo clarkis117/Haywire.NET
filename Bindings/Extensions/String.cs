@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace HaywireNet.Bindings.Extensions
 {
-	public unsafe static class String
+	public static class String
 	{
+		/*
 		public static byte* ToAsciiNullTerm(this string clrString)
 		{
 			var nullTermString = clrString + "\0";
@@ -24,22 +25,14 @@ namespace HaywireNet.Bindings.Extensions
 
 			return bytes;
 		}
+		*/
 
-		public static byte* ToAsciiString(this string clrString)
+		public static IntPtr ToAsciiString(this string clrString)
 		{
-			var nullTermString = clrString;
-			var length = nullTermString.Length;
-
-			byte* bytes = (byte*)Marshal.AllocHGlobal(length);
-
-			fixed (char* chars = nullTermString)
-			{
-				System.Text.Encoding.ASCII.GetBytes(chars, length, bytes, length);
-			}
-
-			return bytes;
+			return Marshal.StringToHGlobalAnsi(clrString);
 		}
 
+		/*
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void ConvertToStack(byte* stackarray, byte[] array)
 		{
@@ -50,6 +43,7 @@ namespace HaywireNet.Bindings.Extensions
 				stackarray++;
 			}
 		}
+		*/
 
 		public static byte[] ToAsciiArray(this string clrString)
 		{
@@ -61,6 +55,7 @@ namespace HaywireNet.Bindings.Extensions
 			return System.Text.Encoding.ASCII.GetBytes(clrString);
 		}
 
+		/*
 		public static byte* ToUtf8NullTerm(this string clrString)
 		{
 			var nullTermString = clrString + "\0";
@@ -75,7 +70,9 @@ namespace HaywireNet.Bindings.Extensions
 
 			return bytes;
 		}
+		*/
 
+		/*
 		public static HaywireString* GetHwStringASCII(this string clrString)
 		{
 			var length = clrString.Length;
@@ -111,14 +108,14 @@ namespace HaywireNet.Bindings.Extensions
 		}
 
 		public static void SetStringASCII(this string clrString, out Safe.HaywireString hwString)
-		{/*
+		{
 			var length = clrString.Length;
 
 			var bytes = System.Text.Encoding.ASCII.GetBytes(clrString);
 
 			hwString.length = (uint)length; // + 1;
 			hwString.value = bytes;
-			*/
+
 
 			var length = clrString.Length;
 
@@ -147,5 +144,6 @@ namespace HaywireNet.Bindings.Extensions
 			hwString.length = (uint)length;
 			hwString.value = bytes;
 		}
+*/
 	}
 }
