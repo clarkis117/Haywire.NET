@@ -1,4 +1,4 @@
-﻿using HaywireNet.Bindings.Unsafe.Structs;
+﻿using HaywireNet.Bindings.Structs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
