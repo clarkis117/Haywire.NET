@@ -6,7 +6,7 @@
 		"copyToOutput": {
 			"mappings": {
 				"libhaywire_shared.so": {
-					"include": "../haywire/build/libhaywire_shared.so"
+					"include": "../../haywire/build/libhaywire_shared.so"
 				}
 			}
 		}

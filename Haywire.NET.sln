@@ -3,16 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Bindings", "Bindings\Bindings.xproj", "{CE490D61-4EE8-47EB-8B72-18447A7B4D7C}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Bindings", "src\Bindings\Bindings.xproj", "{CE490D61-4EE8-47EB-8B72-18447A7B4D7C}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "RequestServer", "RequestServer\RequestServer.xproj", "{D9008931-0EF4-4477-8843-1798500ACC5E}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "RequestServer", "src\RequestServer\RequestServer.xproj", "{D9008931-0EF4-4477-8843-1798500ACC5E}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HelloWorld", "HelloWorld\HelloWorld.xproj", "{982F46E4-B59C-4BD2-B290-FE6FE2F402BA}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HelloWorld", "src\HelloWorld\HelloWorld.xproj", "{982F46E4-B59C-4BD2-B290-FE6FE2F402BA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A597DE43-92B1-4444-A084-2C7C0941A56A}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		.gitmodules = .gitmodules
 		global.json = global.json
+		LICENSE = LICENSE
 		make.sh = make.sh
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global

@@ -10,13 +10,13 @@
     "copyToOutput": {
       "mappings": {
         "libhaywire_shared.so": {
-          "include": "../haywire/build/libhaywire_shared.so"
+          "include": "../../haywire/build/libhaywire_shared.so"
         }
       }
     }
   },
 
-  "packOptions": { "files": { "includeFiles": "../haywire/build/libhaywire_shared.so" } },
+  "packOptions": { "files": { "includeFiles": "../../haywire/libhaywire_shared.so" } },
 
   "frameworks": {
     "netstandard1.6": {

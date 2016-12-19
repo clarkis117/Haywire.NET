@@ -41,7 +41,7 @@ namespace HelloWorld
 
 			if(File.Exists(ConfigFile))
 			{
-				Console.WriteLine("Read config File");
+				Console.WriteLine("Reading config File");
 				config = JsonConvert.DeserializeObject<Configuration>(File.ReadAllText(ConfigFile));
 			}
 			else

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HaywireNet.Bindings.Extensions
 {
-	public static class String
+	public static class StringHelpers
 	{
 		/*
 		public static byte* ToAsciiNullTerm(this string clrString)

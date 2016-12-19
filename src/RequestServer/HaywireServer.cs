@@ -1,20 +1,38 @@
-﻿using Microsoft.AspNetCore.Hosting.Server;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Hosting.Server.Features;
 
 namespace HaywireNet.RequestServer
 {
-	public class Server : IServer
+	public class HaywireServer : IServer
 	{
-		public IFeatureCollection Features
+		private readonly IApplicationLifetime _applicationLifetime;
+		private readonly ILogger _logger;
+		private readonly IServerAddressesFeature _serverAddresses;
+
+		public IFeatureCollection Features { get; }
+
+		public HaywireServerOptions Options { get; }
+
+		public HaywireServer(IOptions<HaywireServerOptions> options, IApplicationLifetime applicationLifetime, ILoggerFactory loggerFactory)
 		{
-			get
-			{
-				throw new NotImplementedException();
-			}
+			if (options == null)
+				throw new ArgumentNullException(nameof(options));
+
+			if (applicationLifetime == null)
+				throw new ArgumentNullException(nameof(applicationLifetime));
+
+			if (loggerFactory == null)
+				throw new ArgumentNullException(nameof(loggerFactory));
+
+			Options = options.Value ?? new HaywireServerOptions();
 		}
 
 		public void Start<TContext>(IHttpApplication<TContext> application)
