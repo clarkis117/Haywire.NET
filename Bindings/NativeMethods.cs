@@ -1,5 +1,4 @@
-﻿using HaywireNet.Bindings.Structs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -21,21 +20,21 @@ namespace HaywireNet.Bindings
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 		public delegate void http_request_callback(ref HttpRequest request, IntPtr response, IntPtr user_data);
 
-
 		public class NativeMethods
 		{
 			[DllImport(Constants.LibraryName, CallingConvention = CallingConvention.Cdecl)]
 			public static extern int hw_init_from_config([MarshalAs(UnmanagedType.LPStr)]string configuration_filename);
 
 			[DllImport(Constants.LibraryName, CallingConvention = CallingConvention.Cdecl)]
-			public static extern int hw_init_with_config(ref configuration config);
+			public static extern int hw_init_with_config(ref Configuration config);
 
 			[DllImport(Constants.LibraryName, CallingConvention = CallingConvention.Cdecl)]
 			public static extern int hw_http_open();
 
 			[DllImport(Constants.LibraryName, CallingConvention = CallingConvention.Cdecl)]
-			public static extern void hw_http_add_route([MarshalAs(UnmanagedType.LPTStr)] string route, http_request_callback callback, IntPtr user_data);
+			public static extern void hw_http_add_route([MarshalAs(UnmanagedType.LPStr)] string route, http_request_callback callback, IntPtr user_data);
 
+			//todo intptr to haywire string
 			[DllImport(Constants.LibraryName, CallingConvention = CallingConvention.Cdecl)]
 			public static extern HaywireString hw_get_header(ref HttpRequest request, ref HaywireString key);
 

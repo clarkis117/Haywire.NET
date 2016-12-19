@@ -11,9 +11,9 @@ namespace HaywireNet.Bindings
 	//concurrent state machine for managing memory associations between string values
 	//and their unmanaged blocks of memory
 	[StructLayout(LayoutKind.Sequential)]
-	public struct HaywireString : IDisposable
+	public struct HaywireString
 	{
-		static readonly ConcurrentDictionary<string, IntPtr> MemoryStrings = new ConcurrentDictionary<string, IntPtr>();
+		public static readonly ConcurrentDictionary<string, IntPtr> MemoryStrings = new ConcurrentDictionary<string, IntPtr>();
 
 		/// <summary>
 		/// normally byte*
@@ -26,18 +26,23 @@ namespace HaywireNet.Bindings
 			get { return MemoryStrings. }
 		}
 		*/
-		private readonly uint length;
+
+		//this is size_t
+		[MarshalAs(UnmanagedType.SysUInt)]
+		private readonly UIntPtr length;
 
 		public HaywireString(string stringVal)
 		{
-			value = stringVal.ToAsciiString();
+			if(!MemoryStrings.ContainsKey(stringVal))
+			{
+				value = stringVal.ToAsciiString();
+			}
+			else
+			{
+				value = MemoryStrings[stringVal];
+			}
 
-			length = (uint)stringVal.Length;
-		}
-
-		public void Dispose()
-		{
-			throw new NotImplementedException();
+			length = new UIntPtr((uint)stringVal.Length);
 		}
 	}
 }

@@ -1,28 +1,29 @@
 ﻿{
-  "version": "1.0.0-*",
-  "buildOptions": {
-    "allowUnsafe": false,
+	"version": "1.0.0-*",
+	"buildOptions": {
+		"allowUnsafe": false,
 	"emitEntryPoint": true,
-    "copyToOutput": {
-      "mappings": {
-        "libhaywire_shared.so": {
-          "include": "../haywire/build/libhaywire_shared.so"
-        }
-      }
-    }
-  },
+		"copyToOutput": {
+			"mappings": {
+				"libhaywire_shared.so": {
+					"include": "../haywire/build/libhaywire_shared.so"
+				}
+			}
+		}
+	},
 
-  "dependencies": {
-    "Bindings": {"target": "project"},
-    "Microsoft.NETCore.App": {
-      "type": "platform",
-      "version": "1.0.1"
-    }
-  },
+	"dependencies": {
+		"Bindings": { "target": "project" },
+		"Microsoft.NETCore.App": {
+			"type": "platform",
+			"version": "1.0.1"
+		},
+		"Newtonsoft.Json": "9.0.1"
+	},
 
-  "frameworks": {
-    "netcoreapp1.0": {
-      "imports": "dnxcore50"
-    }
-  }
+	"frameworks": {
+		"netcoreapp1.0": {
+			"imports": "dnxcore50"
+		}
+	}
 }

@@ -1,0 +1,10 @@
+{
+  "HttpListenAddress": "localhost",
+  "HttpListenPort": 8000,
+  "ThreadCount": 0,
+  "Balancer": "ipc",
+  "Parser": "http_parser",
+  "TcpNoDelay": false,
+  "ListenBackLog": 0,
+  "MaxRequestSize": 1048576
+}
