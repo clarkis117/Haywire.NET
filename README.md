@@ -1,14 +1,14 @@
 # Haywire.NET
 
-Haywire bindings and request server for ASP.NET Core
+Haywire bindings (status: needs review and polish) and request server for ASP.NET Core (status: design work underway)
 
-Currently this only works on Linux (specifically the distros that .NET Core supports) and the Windows Subsystem for Linux
+Currently this only works on Linux (specifically the distros that .NET Core supports) and the Windows Subsystem for Linux (however, it only uses a single thread on WSL).
 
 ###Dependencies (Same as Haywire plus .NET Core)
 ```
 apt-get install git gcc make cmake automake autoconf libssl-dev libtool
 ```
-Follow the instructions at http://dot.net for installing .NET Core for your linux distro. The current version of the of the .NET Core SDK used by the project is:
+Follow the instructions at http://dot.net for installing .NET Core for your linux distro. The current version of the .NET Core SDK used by the project is:
 ```
   dotnet-dev-1.0.0-preview2.1-003177
 ```
@@ -32,7 +32,7 @@ dotnet run --configuration release
 ```
 
 ###Benchmarking 
-Same instructions as Haywire, just be aware that the the Hello World example pulls it's configuration from a json file, config.json. In addition, please make sure you're running and building the Hello World program in release mode otherwise perf results may vary.
+Same instructions as Haywire, just be aware that the the Hello World example pulls its configuration from a json file, config.json. In addition, please make sure you're running and building the Hello World program in release mode otherwise perf results may vary.
 
 #### config.json defaults
 ```
