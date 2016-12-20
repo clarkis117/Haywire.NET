@@ -1,5 +1,7 @@
 #!/bin/bash
-./haywire/make.sh
+cd ./haywire
+./make.sh
 
+cd ../
 dotnet restore */**/project.json
 dotnet build */**/project.json
