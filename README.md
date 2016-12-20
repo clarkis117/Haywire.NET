@@ -15,17 +15,18 @@ Follow the instructions at https://www.microsoft.com/net/core#linuxubuntu for in
 
 
 ##Setup
-Check out this git repo with the haywire submodule. This submodule is needed to produce the shared libraries need for pinvoke in .NET.
+Clone this git repo with the haywire submodule, the submodule is needed to produce the shared libraries for .NET's P/Invoke.
 ```
 git clone --recursive https://github.com/clarkis117/Haywire.NET.git
 ```
 
-##Compiling on Linux - run make.sh in the main directory of Haywire.NET
+##Compiling on Linux - run make.sh in the root directory of Haywire.NET
 ```
 ./make.sh
 ```
 
 ##Hello World – Default URL: http://localhost:8000
+Running the HelloWorld sample, change to its project directory and invoke `dotnet run`
 ```
 cd ./src/HelloWorld
 dotnet run --configuration release
