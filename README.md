@@ -1,6 +1,6 @@
 # Haywire.NET
 
-Haywire bindings (status: needs review and polish) and request server for ASP.NET Core (status: design work underway)
+Haywire bindings (status: needs review and polish) and a request server for ASP.NET Core (status: design work underway)
 
 Currently this only works on Linux (specifically the distros that .NET Core supports) and the Windows Subsystem for Linux (however, it only uses a single thread on WSL).
 
@@ -8,7 +8,7 @@ Currently this only works on Linux (specifically the distros that .NET Core supp
 ```
 apt-get install git gcc make cmake automake autoconf libssl-dev libtool
 ```
-Follow the instructions at http://dot.net for installing .NET Core for your linux distro. The current version of the .NET Core SDK used by the project is:
+Follow the instructions at https://www.microsoft.com/net/core#linuxubuntu for installing .NET Core for your linux distro. The current version of the .NET Core SDK used by the project is:
 ```
   dotnet-dev-1.0.0-preview2.1-003177
 ```
